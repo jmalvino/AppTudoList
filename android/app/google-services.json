@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "764186168843",
+    "project_id": "fir-app-tudo-list",
+    "storage_bucket": "fir-app-tudo-list.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:764186168843:android:f4f719b85d366a2a78810e",
+        "android_client_info": {
+          "package_name": "com.jmalvino.app_tudo_list"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtEjA0Tx05fwZz3oL-SRNuLsBrd-huLIg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
