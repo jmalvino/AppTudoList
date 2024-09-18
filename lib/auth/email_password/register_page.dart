@@ -24,7 +24,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
     // Verificar o modo e definir as cores
     if (appColors.isModo == false) {
-      appColors.clearModo();
+      appColors.lightModo();
     } else {
       appColors.darkModo();
     }
@@ -60,7 +60,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   if (appColors.isModo) {
                     appColors.darkModo();
                   } else {
-                    appColors.clearModo();
+                    appColors.lightModo();
                   }
                 });
               },
@@ -127,9 +127,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   } else {
                     CustomSnackBar(
                       color: Colors.red,
-                      context: context,
                       error: 'Verifique os campos',
-                    ).show();
+                    ).show(context);
                   }
                 },
                 nameButton: 'Logar',
@@ -160,9 +159,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
       CustomSnackBar(
         color: Colors.green,
-        context: context,
         error: 'Cadastrado com sucesso!',
-      ).show();
+      ).show(context);
+
     } on FirebaseAuthException catch (e) {
       String errorMessage;
       if (e.code == 'weak-password') {
@@ -176,15 +175,13 @@ class _RegisterPageState extends State<RegisterPage> {
       }
       CustomSnackBar(
         color: Colors.red,
-        context: context,
         error: errorMessage,
-      ).show();
+      ).show(context);
     } catch (e) {
       CustomSnackBar(
         color: Colors.black,
-        context: context,
         error: 'Ocorreu um erro inesperado.',
-      ).show();
+      ).show(context);
     }
   }
 }

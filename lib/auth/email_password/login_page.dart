@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
 
     // Verificar o modo e definir as cores
     if (appColors.isModo == false) {
-      appColors.clearModo();
+      appColors.lightModo();
     } else {
       appColors.darkModo();
     }
@@ -140,9 +140,8 @@ class _LoginPageState extends State<LoginPage> {
                       } else {
                         CustomSnackBar(
                           color: Colors.red,
-                          context: context,
                           error: 'Verifique os campos',
-                        ).show();
+                        ).show(context);
                       }
                     },
                     nameButton: 'Logar',
@@ -192,9 +191,8 @@ class _LoginPageState extends State<LoginPage> {
                             } else {
                               CustomSnackBar(
                                 color: Colors.red,
-                                context: context,
                                 error: 'Verifique os campos',
-                              ).show();
+                              ).show(context);
                             }
                           },
                           nameButton: 'Google',
@@ -241,14 +239,16 @@ class _LoginPageState extends State<LoginPage> {
                     color: appColors.corPrimaria,
                   ),
                   onPressed: () {
-                    setState(() {
-                      appColors.isModo = !appColors.isModo;
-                      if (appColors.isModo) {
-                        appColors.darkModo();
-                      } else {
-                        appColors.clearModo();
-                      }
-                    });
+                    setState(
+                      () {
+                        appColors.isModo = !appColors.isModo;
+                        if (appColors.isModo) {
+                          appColors.darkModo();
+                        } else {
+                          appColors.lightModo();
+                        }
+                      },
+                    );
                   },
                 ),
               ),
@@ -272,9 +272,8 @@ class _LoginPageState extends State<LoginPage> {
       // print(credential.user?.emailVerified);
       CustomSnackBar(
         color: Colors.green,
-        context: context,
         error: 'Login realizado com sucesso!',
-      ).show();
+      ).show(context);
     } on FirebaseAuthException catch (e) {
       String errorMessage;
       if (e.code == 'user-not-found') {
@@ -291,15 +290,13 @@ class _LoginPageState extends State<LoginPage> {
 
       CustomSnackBar(
         color: Colors.red,
-        context: context,
         error: errorMessage,
-      ).show();
+      ).show(context);
     } catch (e) {
       CustomSnackBar(
         color: Colors.black,
-        context: context,
         error: 'Ocorreu um erro inesperado.',
-      ).show();
+      ).show(context);
     }
   }
 }

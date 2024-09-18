@@ -3,17 +3,16 @@ import 'package:flutter/material.dart';
 class CustomSnackBar {
   final Color color;
   final String error;
-  final BuildContext context;
 
   CustomSnackBar({
     required this.color,
     required this.error,
-    required this.context,
   });
 
-  void show() {
+  void show(BuildContext context) {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
+    scaffoldMessenger.showSnackBar(
       SnackBar(
         backgroundColor: color,
         content: Text(error),

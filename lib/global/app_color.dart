@@ -11,7 +11,7 @@ class AppColors {
   bool isModo = false;
 
   // Modo claro
-  void clearModo() {
+  void lightModo() {
     corPrimaria = Colors.deepPurple;
     buttonTextColor = Colors.white;
     colorTextField = Colors.black;
