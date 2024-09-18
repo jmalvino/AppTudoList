@@ -1,3 +1,4 @@
+import 'package:app_tudo_list/widgets/customTextField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -24,42 +25,56 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Logar',
-        ),
-      ),
+      // appBar: AppBar(
+      //   title: const Text(
+      //     'Logar',
+      //   ),
+      // ),
       body: Padding(
         padding: const EdgeInsets.all(30),
-        child: Column(
-          children: [
-            TextField(
-              controller: emailController,
-              decoration: const InputDecoration(
-                label: Text('E-mail'),
-              ),
-            ),
-            TextField(
-              controller: passwordController,
-              decoration: const InputDecoration(
-                label: Text('Senha'),
-              ),
-            ),
-            const SizedBox(height: 25),
-            ElevatedButton(
-              onPressed: () {
-                if(emailController.text != '' && passwordController.text != '' && passwordController.text.length > 5){
-                  loginUser();
-                  // emailController.clear();
-                  // passwordController.clear();
+        child: Container(
+          color: Colors.grey[200],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomTextField(label: 'E-mail', controller: emailController, obscureText: false, isObscureText: false),
+              const SizedBox(height: 15),
+              CustomTextField(label: 'Senha', controller: passwordController, obscureText: true, isObscureText: true),
+              // TextField(
+              //   controller: emailController,
+              //   decoration: const InputDecoration(
+              //     label: Text('E-mail'),
+              //   ),
+              // ),
+              // TextField(
+              //   controller: passwordController,
+              //   decoration: const InputDecoration(
+              //     label: Text('Senha'),
+              //   ),
+              // ),
+              const SizedBox(height: 15),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if(emailController.text != '' && passwordController.text != '' && passwordController.text.length > 5){
+                          loginUser();
+                          // emailController.clear();
+                          // passwordController.clear();
 
-                }else{
-                  messageError(Colors.red,'Verifique os campos', context);
-                }
-              },
-              child: Text('Logar'),
-            ),
-          ],
+                        }else{
+                          messageError(Colors.red,'Verifique os campos', context);
+                        }
+                      },
+                      child: Text('Logar'),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -79,7 +94,6 @@ class _LoginPageState extends State<LoginPage> {
 
       messageError(Colors.green, 'Login realizado com sucesso!', context);
     } on FirebaseAuthException catch (e) {
-
       String errorMessage;
       if (e.code == 'user-not-found') {
         errorMessage = 'Nenhum usuário encontrado com este email.';

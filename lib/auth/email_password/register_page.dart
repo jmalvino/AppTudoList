@@ -1,3 +1,4 @@
+import 'package:app_tudo_list/widgets/customTextField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -33,18 +34,21 @@ class _RegisterPageState extends State<RegisterPage> {
         padding: const EdgeInsets.all(30),
         child: Column(
           children: [
-            TextField(
-              controller: emailController,
-              decoration: const InputDecoration(
-                label: Text('E-mail'),
-              ),
-            ),
-            TextField(
-              controller: passwordController,
-              decoration: const InputDecoration(
-                label: Text('Senha'),
-              ),
-            ),
+            CustomTextField(label: 'E-mail', controller: emailController, obscureText: false, isObscureText: false),
+            const SizedBox(height: 15),
+            CustomTextField(label: 'Senha', controller: passwordController, obscureText: true, isObscureText: true),
+            // TextField(
+            //   controller: emailController,
+            //   decoration: const InputDecoration(
+            //     label: Text('E-mail'),
+            //   ),
+            // ),
+            // TextField(
+            //   controller: passwordController,
+            //   decoration: const InputDecoration(
+            //     label: Text('Senha'),
+            //   ),
+            // ),
             const SizedBox(height: 25),
             ElevatedButton(
               onPressed: () {
