@@ -24,9 +24,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
     // Verificar o modo e definir as cores
     if (appColors.isModo == false) {
-      appColors.lightModo();
-    } else {
       appColors.darkModo();
+    } else {
+      appColors.lightModo();
     }
   }
 
@@ -43,24 +43,25 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       backgroundColor: appColors.bgColor,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: appColors.corPrimaria),
-        backgroundColor:  appColors.bgColor,
+        elevation: 0,
+        iconTheme: IconThemeData(color: appColors.secondColor),
+        backgroundColor: appColors.bgColor,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               'Cadastro',
-              style: TextStyle(color: appColors.corPrimaria),
+              style: TextStyle(color: appColors.secondColor),
             ),
             IconButton(
-              icon: Icon(appColors.isModo ? Icons.gps_off : Icons.sunny),
+              icon: Icon(appColors.isModo ? Icons.sunny : Icons.gps_off),
               onPressed: () {
                 setState(() {
                   appColors.isModo = !appColors.isModo;
                   if (appColors.isModo) {
-                    appColors.darkModo();
-                  } else {
                     appColors.lightModo();
+                  } else {
+                    appColors.darkModo();
                   }
                 });
               },
@@ -131,7 +132,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ).show(context);
                   }
                 },
-                nameButton: 'Logar',
+                nameButton: 'Concluir',
                 colorButton: appColors.corPrimaria,
                 colorTextButton: appColors.buttonTextColor,
               ),
@@ -161,7 +162,6 @@ class _RegisterPageState extends State<RegisterPage> {
         color: Colors.green,
         error: 'Cadastrado com sucesso!',
       ).show(context);
-
     } on FirebaseAuthException catch (e) {
       String errorMessage;
       if (e.code == 'weak-password') {

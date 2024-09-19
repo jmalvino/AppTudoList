@@ -66,6 +66,8 @@ flutter:
   assets:
     - assets/images/no-image.png
     - assets/images/icon-google.png
+    - assets/images/logo_tudo_list.png
+    - assets/images/logo_tudo_list2.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

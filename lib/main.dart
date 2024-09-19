@@ -1,8 +1,4 @@
 import 'package:app_tudo_list/app/app_module.dart';
-import 'package:app_tudo_list/auth/email_password/login_page.dart';
-import 'package:app_tudo_list/auth/email_password/register_page.dart';
-import 'package:app_tudo_list/auth/show_user.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 

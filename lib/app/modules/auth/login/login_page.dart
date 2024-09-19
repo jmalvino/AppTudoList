@@ -1,4 +1,4 @@
-import 'package:app_tudo_list/auth/email_password/register_page.dart';
+import 'package:app_tudo_list/app/modules/auth/login/register_page.dart';
 import 'package:app_tudo_list/global/app_color.dart';
 import 'package:app_tudo_list/widgets/customButton.dart';
 import 'package:app_tudo_list/widgets/customSnackBar.dart';
@@ -25,9 +25,9 @@ class _LoginPageState extends State<LoginPage> {
 
     // Verificar o modo e definir as cores
     if (appColors.isModo == false) {
-      appColors.lightModo();
-    } else {
       appColors.darkModo();
+    } else {
+      appColors.lightModo();
     }
   }
 
@@ -56,10 +56,10 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(height: 50),
-                  const SizedBox(
+                  SizedBox(
                     width: 177,
                     child: Image(
-                      image: AssetImage('assets/images/no-image.png'),
+                      image: appColors.isModo ? const AssetImage('assets/images/logo_tudo_list2.png') : const AssetImage('assets/images/logo_tudo_list.png'),
                     ),
                   ),
                   const SizedBox(
@@ -235,7 +235,7 @@ class _LoginPageState extends State<LoginPage> {
                 right: 7,
                 child: IconButton(
                   icon: Icon(
-                    appColors.isModo ? Icons.gps_off : Icons.sunny,
+                    appColors.isModo ? Icons.sunny : Icons.gps_off ,
                     color: appColors.corPrimaria,
                   ),
                   onPressed: () {
@@ -243,9 +243,9 @@ class _LoginPageState extends State<LoginPage> {
                       () {
                         appColors.isModo = !appColors.isModo;
                         if (appColors.isModo) {
-                          appColors.darkModo();
-                        } else {
                           appColors.lightModo();
+                        } else {
+                          appColors.darkModo();
                         }
                       },
                     );
