@@ -15,12 +15,17 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
 
   final AppColors appColors = AppColors();
 
   @override
   void initState() {
     super.initState();
+    emailController.text = '';
+    passwordController.text = '';
+    confirmPasswordController.text = '';
 
     // Verificar o modo e definir as cores
     if (appColors.isModo == false) {
@@ -35,6 +40,7 @@ class _RegisterPageState extends State<RegisterPage> {
     // TODO: implement dispose
     emailController.dispose();
     passwordController.dispose();
+    confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -72,71 +78,90 @@ class _RegisterPageState extends State<RegisterPage> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(30),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 15,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 7),
-                child: Row(
-                  children: [
-                    Text(
-                      'Email',
-                      style: TextStyle(
-                        color: appColors.colorTextField,
+          child: Form(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 15,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 7),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Email',
+                        style: TextStyle(
+                          color: appColors.colorTextField,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              CustomTextField(
-                hintText: 'Digite seu e-mail',
-                colorHint: appColors.secondColor,
-                controller: emailController,
-                obscureText: false,
-                isObscureText: false,
-                colorPrincipal: appColors.corPrimaria,
-                textFieldColor: appColors.colorTextField,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 7),
-                child: Row(
-                  children: [
-                    Text('Senha', style: TextStyle(color: appColors.colorTextField)),
-                  ],
+                CustomTextField(
+                  hintText: 'Digite seu e-mail',
+                  colorHint: appColors.secondColor,
+                  controller: emailController,
+                  obscureText: false,
+                  isObscureText: false,
+                  colorPrincipal: appColors.corPrimaria,
+                  textFieldColor: appColors.colorTextField,
                 ),
-              ),
-              CustomTextField(
-                hintText: 'Digite sua senha',
-                colorHint: appColors.secondColor,
-                controller: passwordController,
-                obscureText: true,
-                isObscureText: true,
-                colorPrincipal: appColors.corPrimaria,
-                textFieldColor: appColors.colorTextField,
-              ),
-              const SizedBox(height: 15),
-              CustomButton(
-                onpress: () {
-                  if (emailController.text != '' && passwordController.text != '' && passwordController.text.length > 5) {
-                    registerUser();
-                    // emailController.clear();
-                    // passwordController.clear();
-                  } else {
-                    CustomSnackBar(
-                      color: Colors.red,
-                      error: 'Verifique os campos',
-                    ).show(context);
-                  }
-                },
-                nameButton: 'Concluir',
-                colorButton: appColors.corPrimaria,
-                colorTextButton: appColors.buttonTextColor,
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 7),
+                  child: Row(
+                    children: [
+                      Text('Senha', style: TextStyle(color: appColors.colorTextField)),
+                    ],
+                  ),
+                ),
+                CustomTextField(
+                  hintText: 'Digite sua senha',
+                  colorHint: appColors.secondColor,
+                  controller: passwordController,
+                  obscureText: true,
+                  isObscureText: true,
+                  colorPrincipal: appColors.corPrimaria,
+                  textFieldColor: appColors.colorTextField,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 7),
+                  child: Row(
+                    children: [
+                      Text('Confirmar Senha', style: TextStyle(color: appColors.colorTextField)),
+                    ],
+                  ),
+                ),
+                CustomTextField(
+                  hintText: 'Confirme sua senha',
+                  colorHint: appColors.secondColor,
+                  controller: confirmPasswordController,
+                  obscureText: true,
+                  isObscureText: true,
+                  colorPrincipal: appColors.corPrimaria,
+                  textFieldColor: appColors.colorTextField,
+                ),
+                const SizedBox(height: 15),
+                CustomButton(
+                  onpress: () {
+                    if (emailController.text != '' && passwordController.text != '' && passwordController.text.length > 5) {
+                      registerUser();
+                      // emailController.clear();
+                      // passwordController.clear();
+                    } else {
+                      CustomSnackBar(
+                        color: Colors.red,
+                        error: 'Verifique os campos',
+                      ).show(context);
+                    }
+                  },
+                  nameButton: 'Salvar',
+                  colorButton: appColors.corPrimaria,
+                  colorTextButton: appColors.buttonTextColor,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -144,44 +169,52 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<void> registerUser() async {
-    try {
-      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
-
-      final user = credential.user;
-      print(user);
-
-      //verifica se o e-mail foi verificado
-      // if (user != null && !user.emailVerified) {
-      //   messageError(Colors.red, 'E-mail não verificado, por favor verifique seu e-mail', context);
-      // }
-
-      CustomSnackBar(
-        color: Colors.green,
-        error: 'Cadastrado com sucesso!',
-      ).show(context);
-    } on FirebaseAuthException catch (e) {
-      String errorMessage;
-      if (e.code == 'weak-password') {
-        errorMessage = 'A senha fornecida é muito fraca.';
-      } else if (e.code == 'email-already-in-use') {
-        errorMessage = 'O email já está sendo usado em outra conta.';
-      } else if (e.code == 'invalid-email') {
-        errorMessage = 'O email fornecido é inválido.';
-      } else {
-        errorMessage = 'Erro ao cadastrar: ${e.message}';
-      }
+    if(confirmPasswordController.text != passwordController.text){
       CustomSnackBar(
         color: Colors.red,
-        error: errorMessage,
+        error: 'Senha não confere',
       ).show(context);
-    } catch (e) {
-      CustomSnackBar(
-        color: Colors.black,
-        error: 'Ocorreu um erro inesperado.',
-      ).show(context);
+    }else{
+      try {
+        final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+
+        final user = credential.user;
+        print(user);
+
+        //verifica se o e-mail foi verificado
+        // if (user != null && !user.emailVerified) {
+        //   messageError(Colors.red, 'E-mail não verificado, por favor verifique seu e-mail', context);
+        // }
+
+        CustomSnackBar(
+          color: Colors.green,
+          error: 'Cadastrado com sucesso!',
+        ).show(context);
+      } on FirebaseAuthException catch (e) {
+        String errorMessage;
+        if (e.code == 'weak-password') {
+          errorMessage = 'A senha fornecida é muito fraca.';
+        } else if (e.code == 'email-already-in-use') {
+          errorMessage = 'O email já está sendo usado em outra conta.';
+        } else if (e.code == 'invalid-email') {
+          errorMessage = 'O email fornecido é inválido.';
+        } else {
+          errorMessage = 'Erro ao cadastrar: ${e.message}';
+        }
+        CustomSnackBar(
+          color: Colors.red,
+          error: errorMessage,
+        ).show(context);
+      } catch (e) {
+        CustomSnackBar(
+          color: Colors.black,
+          error: 'Ocorreu um erro inesperado.',
+        ).show(context);
+      }
     }
+
   }
 }

@@ -22,6 +22,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    emailController.text = '';
+    passwordController.text = '';
 
     // Verificar o modo e definir as cores
     if (appColors.isModo == false) {
@@ -51,184 +53,186 @@ class _LoginPageState extends State<LoginPage> {
           padding: const EdgeInsets.all(30),
           child: Stack(
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 50),
-                  SizedBox(
-                    width: 177,
-                    child: Image(
-                      image: appColors.isModo ? const AssetImage('assets/images/logo_tudo_list2.png') : const AssetImage('assets/images/logo_tudo_list.png'),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Bem vindo ao $nomeDoApp',
-                        style: TextStyle(
-                          color: appColors.colorTextField,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w700,
-                        ),
-                        overflow: TextOverflow.ellipsis,
+              Form(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 50),
+                    SizedBox(
+                      width: 177,
+                      child: Image(
+                        image: appColors.isModo ? const AssetImage('assets/images/logo_tudo_list2.png') : const AssetImage('assets/images/logo_tudo_list.png'),
                       ),
-                      Text(
-                        'Entre com seu e-mail e senha para continuar',
-                        style: TextStyle(
-                          color: appColors.secondColor,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12,
-                        ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 7),
-                    child: Row(
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Email',
+                          'Bem vindo ao $nomeDoApp',
                           style: TextStyle(
                             color: appColors.colorTextField,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
-                      ],
-                    ),
-                  ),
-                  CustomTextField(
-                    hintText: 'Digite seu e-mail',
-                    colorHint: appColors.secondColor,
-                    controller: emailController,
-                    obscureText: false,
-                    isObscureText: false,
-                    colorPrincipal: appColors.corPrimaria,
-                    textFieldColor: appColors.colorTextField,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 7),
-                    child: Row(
-                      children: [
-                        Text('Senha', style: TextStyle(color: appColors.colorTextField)),
-                      ],
-                    ),
-                  ),
-                  CustomTextField(
-                    hintText: 'Digite sua senha',
-                    colorHint: appColors.secondColor,
-                    controller: passwordController,
-                    obscureText: true,
-                    isObscureText: true,
-                    colorPrincipal: appColors.corPrimaria,
-                    textFieldColor: appColors.colorTextField,
-                  ),
-                  const SizedBox(height: 15),
-                  CustomButton(
-                    onpress: () {
-                      if (emailController.text != '' && passwordController.text != '' && passwordController.text.length > 5) {
-                        loginUser();
-                        // emailController.clear();
-                        // passwordController.clear();
-                      } else {
-                        CustomSnackBar(
-                          color: Colors.red,
-                          error: 'Verifique os campos',
-                        ).show(context);
-                      }
-                    },
-                    nameButton: 'Logar',
-                    colorButton: appColors.corPrimaria,
-                    colorTextButton: appColors.buttonTextColor,
-                  ),
-                  Visibility(
-                    visible: loginComGoogle,
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Expanded(
-                              child: Container(
-                                color: appColors.tetrialColor,
-                                child: const SizedBox(
-                                  width: 100,
-                                  height: 2,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                              child: Text(
-                                'Ou login por',
-                                style: TextStyle(color: appColors.secondColor),
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                color: appColors.tetrialColor,
-                                width: 100,
-                                child: const SizedBox(
-                                  height: 2,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        CustomButton(
-                          onpress: () {
-                            if (emailController.text != '' && passwordController.text != '' && passwordController.text.length > 5) {
-                              loginUser();
-                              // emailController.clear();
-                              // passwordController.clear();
-                            } else {
-                              CustomSnackBar(
-                                color: Colors.red,
-                                error: 'Verifique os campos',
-                              ).show(context);
-                            }
-                          },
-                          nameButton: 'Google',
-                          imagePath: 'assets/images/icon-google.png',
-                          colorButton: appColors.corPrimaria,
-                          colorTextButton: appColors.buttonTextColor,
-                        ),
-                      ],
-                    ),
-                  ),
-                  //Cadastro
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Text(
-                          'Não tem conta?',
-                          style: TextStyle(color: appColors.secondColor),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()));
-                        },
-                        child: Text(
-                          'Cadastre-se',
+                        Text(
+                          'Entre com seu e-mail e senha para continuar',
                           style: TextStyle(
                             color: appColors.secondColor,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 12,
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 7),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Email',
+                            style: TextStyle(
+                              color: appColors.colorTextField,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    CustomTextField(
+                      hintText: 'Digite seu e-mail',
+                      colorHint: appColors.secondColor,
+                      controller: emailController,
+                      obscureText: false,
+                      isObscureText: false,
+                      colorPrincipal: appColors.corPrimaria,
+                      textFieldColor: appColors.colorTextField,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 7),
+                      child: Row(
+                        children: [
+                          Text('Senha', style: TextStyle(color: appColors.colorTextField)),
+                        ],
+                      ),
+                    ),
+                    CustomTextField(
+                      hintText: 'Digite sua senha',
+                      colorHint: appColors.secondColor,
+                      controller: passwordController,
+                      obscureText: true,
+                      isObscureText: true,
+                      colorPrincipal: appColors.corPrimaria,
+                      textFieldColor: appColors.colorTextField,
+                    ),
+                    const SizedBox(height: 15),
+                    CustomButton(
+                      onpress: () {
+                        if (emailController.text != '' && passwordController.text != '' && passwordController.text.length > 5) {
+                          loginUser();
+                          // emailController.clear();
+                          // passwordController.clear();
+                        } else {
+                          CustomSnackBar(
+                            color: Colors.red,
+                            error: 'Verifique os campos',
+                          ).show(context);
+                        }
+                      },
+                      nameButton: 'Logar',
+                      colorButton: appColors.corPrimaria,
+                      colorTextButton: appColors.buttonTextColor,
+                    ),
+                    Visibility(
+                      visible: loginComGoogle,
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  color: appColors.tetrialColor,
+                                  child: const SizedBox(
+                                    width: 100,
+                                    height: 2,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 10),
+                                child: Text(
+                                  'Ou login por',
+                                  style: TextStyle(color: appColors.secondColor),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  color: appColors.tetrialColor,
+                                  width: 100,
+                                  child: const SizedBox(
+                                    height: 2,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          CustomButton(
+                            onpress: () {
+                              if (emailController.text != '' && passwordController.text != '' && passwordController.text.length > 5) {
+                                loginUser();
+                                // emailController.clear();
+                                // passwordController.clear();
+                              } else {
+                                CustomSnackBar(
+                                  color: Colors.red,
+                                  error: 'Verifique os campos',
+                                ).show(context);
+                              }
+                            },
+                            nameButton: 'Google',
+                            imagePath: 'assets/images/icon-google.png',
+                            colorButton: appColors.corPrimaria,
+                            colorTextButton: appColors.buttonTextColor,
+                          ),
+                        ],
+                      ),
+                    ),
+                    //Cadastro
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Text(
+                            'Não tem conta?',
+                            style: TextStyle(color: appColors.secondColor),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pushNamed('/register');
+                          },
+                          child: Text(
+                            'Cadastre-se',
+                            style: TextStyle(
+                              color: appColors.secondColor,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
               Positioned(
                 top: 7,
