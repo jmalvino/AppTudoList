@@ -8,16 +8,20 @@ class CustomTextField extends StatefulWidget {
   final Color textFieldColor;
   final Color colorPrincipal;
   final Color colorHint;
+  final String? Function(String?)? validator;
 
-  const CustomTextField({
-    required this.hintText,
-    required this.controller,
-    required this.obscureText,
-    required this.isObscureText,
-    required this.colorPrincipal,
-    required this.textFieldColor,
-    required this.colorHint,
-  });
+  const CustomTextField(
+      {super.key,
+      required this.hintText,
+      required this.controller,
+      required this.obscureText,
+      required this.isObscureText,
+      required this.colorPrincipal,
+      required this.textFieldColor,
+      required this.colorHint,
+      this.validator});
+
+  bool get isTextObscured => obscureText;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -40,7 +44,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Row(
       children: [
         Expanded(
-          child: TextField(
+          child: TextFormField(
             style: TextStyle(
               color: widget.textFieldColor,
             ),
@@ -76,6 +80,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 ),
               ),
             ),
+            validator: widget.validator,
           ),
         ),
       ],

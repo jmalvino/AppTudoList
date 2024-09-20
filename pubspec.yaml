@@ -39,6 +39,8 @@ dependencies:
   firebase_auth: ^4.0.0
   provider: ^5.0.0
   sqflite: ^2.0.0+3
+  validatorless: ^1.2.3
+  flutter_overlay_loader: ^2.0.0
 
 dev_dependencies:
   flutter_test:

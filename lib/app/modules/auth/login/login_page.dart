@@ -1,10 +1,11 @@
-import 'package:app_tudo_list/app/modules/auth/login/register_page.dart';
+import 'package:app_tudo_list/app/modules/register/register_page.dart';
 import 'package:app_tudo_list/global/app_color.dart';
 import 'package:app_tudo_list/widgets/customButton.dart';
 import 'package:app_tudo_list/widgets/customSnackBar.dart';
 import 'package:app_tudo_list/widgets/customTextField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:validatorless/validatorless.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -16,7 +17,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
   final AppColors appColors = AppColors();
 
   @override
@@ -45,6 +45,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     String nomeDoApp = "APP";
     var loginComGoogle = true;
+    final _forKey = GlobalKey<FormState>();
 
     return Scaffold(
       backgroundColor: appColors.bgColor,
@@ -54,6 +55,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Stack(
             children: [
               Form(
+                key: _forKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -115,6 +117,9 @@ class _LoginPageState extends State<LoginPage> {
                       isObscureText: false,
                       colorPrincipal: appColors.corPrimaria,
                       textFieldColor: appColors.colorTextField,
+                      validator: Validatorless.multiple([
+                        Validatorless.email('Digite um e-mail válido!'),
+                      ]),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 7),
@@ -132,20 +137,25 @@ class _LoginPageState extends State<LoginPage> {
                       isObscureText: true,
                       colorPrincipal: appColors.corPrimaria,
                       textFieldColor: appColors.colorTextField,
+                      validator: Validatorless.multiple([
+                        Validatorless.min(6, 'A senha deve ser maior que 5 caractér!'),
+                      ]),
                     ),
                     const SizedBox(height: 15),
                     CustomButton(
                       onpress: () {
-                        if (emailController.text != '' && passwordController.text != '' && passwordController.text.length > 5) {
-                          loginUser();
-                          // emailController.clear();
-                          // passwordController.clear();
-                        } else {
-                          CustomSnackBar(
-                            color: Colors.red,
-                            error: 'Verifique os campos',
-                          ).show(context);
-                        }
+                        final _formValid = _forKey.currentState?.validate() ?? false;
+                        loginUser();
+                        // if (emailController.text != '' && passwordController.text != '' && passwordController.text.length > 5) {
+                        //   loginUser();
+                        //   // emailController.clear();
+                        //   // passwordController.clear();
+                        // } else {
+                        //   CustomSnackBar(
+                        //     color: Colors.red,
+                        //     error: 'Verifique os campos',
+                        //   ).show(context);
+                        // }
                       },
                       nameButton: 'Logar',
                       colorButton: appColors.corPrimaria,
@@ -239,7 +249,7 @@ class _LoginPageState extends State<LoginPage> {
                 right: 7,
                 child: IconButton(
                   icon: Icon(
-                    appColors.isModo ? Icons.sunny : Icons.gps_off ,
+                    appColors.isModo ? Icons.sunny : Icons.gps_off,
                     color: appColors.corPrimaria,
                   ),
                   onPressed: () {
