@@ -1,6 +1,9 @@
 import 'package:app_tudo_list/app/exception/auth_exceptions.dart';
 import 'package:app_tudo_list/app/modules/register/user/user_repository.dart';
+import 'package:app_tudo_list/widgets/customSnackBar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class UserRepositoryImplements implements UserRepository {
   FirebaseAuth _firebaseAuth;
@@ -34,6 +37,43 @@ class UserRepositoryImplements implements UserRepository {
         print("ERRO DO FIREBASE ${e.message}");
         errorMessage = 'Erro ao registrar usurário';
       }
+    }
+  }
+
+  @override
+  Future<User?> login(String email, String password) async{
+    try{
+    final credential = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+    return credential.user;
+    } on PlatformException catch (e,s){
+      print(e);
+      print(s);
+      throw AuthExepetions(message: e.message ?? 'Erro ao realizar login!');
+    }on FirebaseAuthException catch (e,s){
+      print(e);
+      print(s);
+      String errorMessage = '';
+      if (e.code == 'user-not-found') {
+        errorMessage = 'Nenhum usuário encontrado com este e-mail.';
+      } else if (e.code == 'wrong-password') {
+        errorMessage = 'A senha está incorreta. Por favor, tente novamente.';
+      } else if (e.code == 'invalid-email') {
+        errorMessage = 'O email fornecido é inválido.';
+      } else if (e.code == 'user-disabled') {
+        errorMessage = 'Esta conta foi desativada. Entre em contato com o suporte.';
+      } else if (e.code == 'invalid-credential'){
+        errorMessage = 'Erro de Credencial.';
+      } else if(e.code == 'too-many-requests'){
+        errorMessage = 'Bloqueamos todas as solicitações deste dispositivo devido a atividade incomum. Tente novamente mais tarde.';
+      }
+      else {
+        print("ERRO DO FIREBASE: ${e.message}");
+        errorMessage = 'Erro ao tentar fazer login. Tente novamente mais tarde.';
+      }
+      // CustomSnackBar(color: Colors.red, error: errorMessage); FALTA O CONTEXTO PARA FUNCIONAR .show(context)
+      throw AuthExepetions(message: 'Erro ao logar, motivo $errorMessage');
+
+
     }
   }
 }

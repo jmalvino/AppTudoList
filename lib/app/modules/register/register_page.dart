@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:validatorless/validatorless.dart';
 
 class RegisterPage extends StatefulWidget {
-  RegisterPage({super.key});
+  const RegisterPage({super.key});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -72,7 +72,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _forKey = GlobalKey<FormState>();
+    final forKey = GlobalKey<FormState>();
     return Scaffold(
       backgroundColor: appColors.bgColor,
       appBar: AppBar(
@@ -106,7 +106,7 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Padding(
           padding: const EdgeInsets.all(30),
           child: Form(
-            key: _forKey,
+            key: forKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -181,7 +181,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 15),
                 CustomButton(
                   onpress: () {
-                    final _formValid = _forKey.currentState?.validate() ?? false;
+                    final formValid = forKey.currentState?.validate() ?? false;
+                    if(formValid){
+                      final email = _emailController.text;
+                      final password = _passwordController.text;
+                      context.read<RegisterController>().registerUser(email, password);
+                    }
+
+
                     // registerUser();
                     // if (_emailController.text != '' && _passwordController.text != '' && _passwordController.text.length > 5) {
                     //   registerUser();

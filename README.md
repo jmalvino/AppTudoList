@@ -1,6 +1,6 @@
 # app_tudo_list
 
-App de Tarefas
+O aplicativo se chama "Tudo" List, pois combina diversos tipos de listas em um só lugar. Nele, você pode organizar sua lista de tarefas, contas a pagar e afazeres de maneira prática e eficiente. É uma solução completa para quem deseja centralizar e gerenciar todas as suas listas cotidianas em um único app.
 
 ## Getting Started
 
