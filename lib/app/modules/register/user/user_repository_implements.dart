@@ -41,15 +41,15 @@ class UserRepositoryImplements implements UserRepository {
   }
 
   @override
-  Future<User?> login(String email, String password) async{
-    try{
-    final credential = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
-    return credential.user;
-    } on PlatformException catch (e,s){
+  Future<User?> login(String email, String password) async {
+    try {
+      final credential = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+      return credential.user;
+    } on PlatformException catch (e, s) {
       print(e);
       print(s);
       throw AuthExepetions(message: e.message ?? 'Erro ao realizar login!');
-    }on FirebaseAuthException catch (e,s){
+    } on FirebaseAuthException catch (e, s) {
       print(e);
       print(s);
       String errorMessage = '';
@@ -61,19 +61,35 @@ class UserRepositoryImplements implements UserRepository {
         errorMessage = 'O email fornecido é inválido.';
       } else if (e.code == 'user-disabled') {
         errorMessage = 'Esta conta foi desativada. Entre em contato com o suporte.';
-      } else if (e.code == 'invalid-credential'){
+      } else if (e.code == 'invalid-credential') {
         errorMessage = 'Erro de Credencial.';
-      } else if(e.code == 'too-many-requests'){
+      } else if (e.code == 'too-many-requests') {
         errorMessage = 'Bloqueamos todas as solicitações deste dispositivo devido a atividade incomum. Tente novamente mais tarde.';
-      }
-      else {
+      } else {
         print("ERRO DO FIREBASE: ${e.message}");
         errorMessage = 'Erro ao tentar fazer login. Tente novamente mais tarde.';
       }
       // CustomSnackBar(color: Colors.red, error: errorMessage); FALTA O CONTEXTO PARA FUNCIONAR .show(context)
       throw AuthExepetions(message: 'Erro ao logar, motivo $errorMessage');
+    }
+  }
 
+  @override
+  Future<void> forgorPassword(String email) async {
+    final loginMethods = await _firebaseAuth.fetchSignInMethodsForEmail(email);
 
+    try {
+      if (loginMethods.contains('password')) {
+        await _firebaseAuth.sendPasswordResetEmail(email: email);
+      } else if(loginMethods.contains('google')){
+        throw AuthExepetions(message: 'Cadastro realizado com o Google, senha não pode ser redefinida!');
+      }else {
+        throw AuthExepetions(message: 'E-mail não cadastrado!');
+      }
+    } on PlatformException catch (e, s) {
+      print('ERRROORR: $e');
+      print('ERRROORR: $s');
+      throw AuthExepetions(message: 'Erro ao resetar senha!');
     }
   }
 }

@@ -20,6 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final AppColors appColors = AppColors();
+  final _emailFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -29,6 +30,13 @@ class _LoginPageState extends State<LoginPage> {
 
     DefaultListenerNotifier(changeNotifier: context.read<LoginController>()).listener(
       context: context,
+      everCallback: (notifier, listenerInstance) {
+        if(notifier is LoginController){
+          if(notifier.hasInfo){
+            CustomSnackBar(color: Colors.red, error: notifier.infoMessage!).show(context);
+          }
+        }
+      },
       successCallback: (notifier, listenerInstance) {
         print("LOGOU COM SUCESSO!");
       },
@@ -117,6 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   CustomTextField(
                     hintText: 'Digite seu e-mail',
+                    focusNode: _emailFocusNode,
                     colorHint: appColors.secondColor,
                     controller: _emailController,
                     obscureText: false,
@@ -262,8 +271,9 @@ class _LoginPageState extends State<LoginPage> {
                       TextButton(
                         onPressed: () {
                          if(_emailController.text.isNotEmpty){
-                           //recuperarSenha
+                           context.read<LoginController>().forgorPassword(_emailController.text);
                          }else{
+                           _emailFocusNode.requestFocus();
                            CustomSnackBar(error: 'Digite um e-mail para recuperar senha',color: Colors.red).show(context);
                          }
                         },
