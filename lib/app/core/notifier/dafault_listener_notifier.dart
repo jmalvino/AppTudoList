@@ -18,7 +18,7 @@ class DefaultListenerNotifier {
     ErrorVoidCallback? errorCallback,
   }) {
     changeNotifier.addListener(() {
-      if(everCallback != null){
+      if (everCallback != null) {
         everCallback(changeNotifier, this);
       }
       if (changeNotifier.loading) {
@@ -27,7 +27,7 @@ class DefaultListenerNotifier {
         Loader.hide();
       }
       if (changeNotifier.hasError) {
-        CustomSnackBar(color: Colors.orange, error: changeNotifier.error ?? 'Erro Interno');
+        CustomSnackBar(color: Colors.orange, error: changeNotifier.error ?? 'Erro Interno').show(context);
       } else if (changeNotifier.isSuccess) {
         successCallback(changeNotifier, this);
       }
@@ -44,10 +44,10 @@ typedef SuccessVoidCallback = void Function(
   DefaultListenerNotifier listenerInstance,
 );
 typedef EverVoidCallback = void Function(
-    DefaultChangeNotifier notifier,
-    DefaultListenerNotifier listenerInstance,
-    );
+  DefaultChangeNotifier notifier,
+  DefaultListenerNotifier listenerInstance,
+);
 typedef ErrorVoidCallback = void Function(
-    DefaultChangeNotifier notifier,
-    DefaultListenerNotifier listenerInstance,
-    );
+  DefaultChangeNotifier notifier,
+  DefaultListenerNotifier listenerInstance,
+);

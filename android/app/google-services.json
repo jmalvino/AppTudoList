@@ -12,7 +12,20 @@
           "package_name": "com.jmalvino.app_tudo_list"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "764186168843-vl8aas7s3fvncakd7bglbkl8r08tla8e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jmalvino.app_tudo_list",
+            "certificate_hash": "d98238fcdbfec66241362f8009259da32a5da44d"
+          }
+        },
+        {
+          "client_id": "764186168843-eceemq9shaif8tvu80bd8rkg1cr6eiuf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBtEjA0Tx05fwZz3oL-SRNuLsBrd-huLIg"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "764186168843-eceemq9shaif8tvu80bd8rkg1cr6eiuf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "764186168843-2c9sbh48f4n78v17mpgf1tglkil5b6nl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jmalvino.appTudoList"
+              }
+            }
+          ]
         }
       }
     }

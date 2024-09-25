@@ -36,9 +36,9 @@ class _RegisterPageState extends State<RegisterPage> {
       successCallback: (notifier, listenerInstance) {
         // listenerInstance.dispose();
         Navigator.of(context).pushNamed('/login');
+        CustomSnackBar(color: Colors.green, error: 'Conta cadastrada com sucesso!').show(context);
       },
     );
-
     // context.read<RegisterController>().addListener((){});
     // var controller = context.read<RegisterController>();
     // var success = controller.success;
@@ -59,7 +59,6 @@ class _RegisterPageState extends State<RegisterPage> {
       appColors.lightModo();
     }
   }
-
   @override
   void dispose() {
     // TODO: implement dispose
@@ -187,7 +186,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       final password = _passwordController.text;
                       context.read<RegisterController>().registerUser(email, password);
                     }
-
 
                     // registerUser();
                     // if (_emailController.text != '' && _passwordController.text != '' && _passwordController.text.length > 5) {

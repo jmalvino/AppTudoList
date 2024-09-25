@@ -1,4 +1,5 @@
 import 'package:app_tudo_list/app/app_widget.dart';
+import 'package:app_tudo_list/app/core/auth/auth_provider.dart' as firebaseAuthProvider;
 import 'package:app_tudo_list/app/core/database/sqlite_connection_factory.dart';
 import 'package:app_tudo_list/app/modules/register/user/user_repository.dart';
 import 'package:app_tudo_list/app/modules/register/user/user_repository_implements.dart';
@@ -7,6 +8,7 @@ import 'package:app_tudo_list/app/services/user/user_service_implements.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 
 class AppModule extends StatelessWidget {
   const AppModule({super.key});
@@ -25,6 +27,10 @@ class AppModule extends StatelessWidget {
         ),
         Provider<UserService>(
           create: (context) => UserServiceImplements(userRepository: context.read()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => firebaseAuthProvider.AuthProvider(firebaseAuth: context.read(), userService: context.read())..loadListener(),
+          lazy: false,
         ),
       ],
       child: const AppWidget(),

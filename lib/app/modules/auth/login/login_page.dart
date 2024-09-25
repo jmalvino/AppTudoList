@@ -38,6 +38,7 @@ class _LoginPageState extends State<LoginPage> {
         }
       },
       successCallback: (notifier, listenerInstance) {
+        CustomSnackBar(color: Colors.green, error: notifier.error ?? 'Logado com sucesso').show(context);
         print("LOGOU COM SUCESSO!");
       },
     );
@@ -219,17 +220,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         CustomButton(
                           onpress: () {
-
-                            // if (_emailController.text != '' && _passwordController.text != '' && _passwordController.text.length > 5) {
-                            //   // loginUser();
-                            //   // emailController.clear();
-                            //   // passwordController.clear();
-                            // } else {
-                            //   CustomSnackBar(
-                            //     color: Colors.red,
-                            //     error: 'Verifique os campos',
-                            //   ).show(context);
-                            // }
+                            context.read<LoginController>().googleLogin();
                           },
                           nameButton: 'Google',
                           imagePath: 'assets/images/icon-google.png',
@@ -265,7 +256,7 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Esqueceu sua senha?',
+                        'Esqueci minha senha?',
                         style: TextStyle(color: appColors.secondColor),
                       ),
                       TextButton(
