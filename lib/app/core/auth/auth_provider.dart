@@ -10,21 +10,26 @@ class AuthProvider extends ChangeNotifier {
   AuthProvider({
     required FirebaseAuth firebaseAuth,
     required UserService userService,
-  })  : _firebaseAuth = firebaseAuth,
+  })
+      : _firebaseAuth = firebaseAuth,
         _userService = userService;
 
   Future<void> logout() => _userService.logout();
+
   User? get user => _firebaseAuth.currentUser;
 
-  void loadListener(){
-    _firebaseAuth.userChanges().listen((_) => notifyListeners());
-    _firebaseAuth.idTokenChanges().listen((user) {
-      if(user != null){
-        TodoListNavigator.to.pushNamedAndRemoveUntil('/home', (route) => false);
-      }else{
-        TodoListNavigator.to.pushNamedAndRemoveUntil('/login', (route) => false);
-      }
-    });
+  void loadListener() {
+    Future.delayed(const Duration(seconds: 2), () {
+      _firebaseAuth.userChanges().listen((_) => notifyListeners());
+      _firebaseAuth.idTokenChanges().listen((user) {
+        if (user != null) {
+          TodoListNavigator.to.pushNamedAndRemoveUntil('/home', (route) => false);
+        } else {
+          TodoListNavigator.to.pushNamedAndRemoveUntil('/login', (route) => false);
+        }
+      });
+    }
+    );
   }
 
 

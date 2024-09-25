@@ -1,4 +1,4 @@
-import 'package:app_tudo_list/app/modules/register/user/user_repository.dart';
+import 'package:app_tudo_list/app/repositories/user/user_repository.dart';
 import 'package:app_tudo_list/app/services/user/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -20,6 +20,9 @@ class UserServiceImplements implements UserService{
 
   @override
   Future<void> logout() => _userRepository.logout();
+
+  @override
+  Future<User?> updateDisplayName(String name) => _userRepository.updateDisplayName(name);
 
 
 }

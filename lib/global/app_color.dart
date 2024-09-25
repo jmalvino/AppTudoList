@@ -26,7 +26,7 @@ class AppColors {
     buttonTextColor = Colors.white;
     colorTextField = Colors.white;
     secondColor = const Color(0xFF707070);
-    tetrialColor = const Color(0xFF757575);
+    tetrialColor = const Color(0xFFB3B3B3);
     bgColor = const Color(0xFF303030);
   }
 }

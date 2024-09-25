@@ -1,8 +1,8 @@
 import 'package:app_tudo_list/app/app_widget.dart';
 import 'package:app_tudo_list/app/core/auth/auth_provider.dart' as firebaseAuthProvider;
 import 'package:app_tudo_list/app/core/database/sqlite_connection_factory.dart';
-import 'package:app_tudo_list/app/modules/register/user/user_repository.dart';
-import 'package:app_tudo_list/app/modules/register/user/user_repository_implements.dart';
+import 'package:app_tudo_list/app/repositories/user/user_repository.dart';
+import 'package:app_tudo_list/app/repositories/user/user_repository_implements.dart';
 import 'package:app_tudo_list/app/services/user/user_service.dart';
 import 'package:app_tudo_list/app/services/user/user_service_implements.dart';
 import 'package:firebase_auth/firebase_auth.dart';

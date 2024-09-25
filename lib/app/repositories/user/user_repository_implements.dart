@@ -1,5 +1,5 @@
 import 'package:app_tudo_list/app/exception/auth_exceptions.dart';
-import 'package:app_tudo_list/app/modules/register/user/user_repository.dart';
+import 'package:app_tudo_list/app/repositories/user/user_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -132,5 +132,14 @@ class UserRepositoryImplements implements UserRepository {
   Future<void> logout() async {
     await GoogleSignIn().signOut();
     _firebaseAuth.signOut();
+  }
+
+  @override
+  Future<User?> updateDisplayName(String name) async{
+    final user = _firebaseAuth.currentUser;
+    if(user != null){
+      await user.updateDisplayName(name);
+      user.reload();
+    }
   }
 }

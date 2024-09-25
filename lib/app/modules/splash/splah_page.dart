@@ -11,6 +11,8 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
+
+
     // Future.delayed(const Duration(seconds: 2), () {
     //   // Navigator.of(context).pushReplacement(
     //   //   MaterialPageRoute(
