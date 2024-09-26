@@ -1,6 +1,8 @@
 import 'package:app_tudo_list/app/modules/home/widgets/home_drawer.dart';
 import 'package:app_tudo_list/app/modules/home/widgets/home_filter.dart';
 import 'package:app_tudo_list/app/modules/home/widgets/home_header.dart';
+import 'package:app_tudo_list/app/modules/home/widgets/home_tasks.dart';
+import 'package:app_tudo_list/app/modules/home/widgets/home_week_filter.dart';
 import 'package:app_tudo_list/global/app_color.dart';
 import 'package:flutter/material.dart';
 
@@ -27,17 +29,44 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: appColors.secondColor,
+      backgroundColor: appColors.bgColor,
       appBar: AppBar(
-        backgroundColor: appColors.secondColor,
+        backgroundColor: appColors.bgColor,
+        iconTheme: IconThemeData(
+          color: appColors.colorTextField,
+        ),
         elevation: 0,
-        title: const Text('Home'),
+        title: Text(
+          '',
+          style: TextStyle(color: appColors.colorTextField),
+        ),
         actions: [
           PopupMenuButton(
-            itemBuilder: (_) => [const PopupMenuItem(child: Text('Mostrar tarefas concluidas'))],
+            color: appColors.colorTextField,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+              ), // Define o arredondamento
+            ),
+            itemBuilder: (_) => [
+              PopupMenuItem(
+                child: Text(
+                  'Mostrar tarefas concluidas',
+                  style: TextStyle(
+                    color: appColors.bgColor,
+                  ),
+                ),
+              ),
+            ],
             icon: const Icon(Icons.filter_alt_outlined),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){},
+        backgroundColor: appColors.corPrimaria,
+        child: Icon(Icons.add, color: Colors.white),
       ),
       drawer: HomeDrawer(),
       body: LayoutBuilder(
@@ -56,10 +85,14 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         HomeHeader(appColors: appColors),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: HomeFilter(appColors: appColors),
-                        ),
+                        const SizedBox(height: 20),
+                        HomeFilter(appColors: appColors),
+                        const SizedBox(height: 20),
+                        HomeWeekFilter(appColors: appColors),
+                        const SizedBox(height: 20),
+                        HomeTasks(
+                          appColors: appColors,
+                        )
                       ],
                     ),
                   ),

@@ -17,7 +17,7 @@ class TodoCardFilter extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: appColors.tetrialColor,
+        color: appColors.tetrialColor.withAlpha(30),
       ),
       child: Padding(
         padding: const EdgeInsets.all(5),

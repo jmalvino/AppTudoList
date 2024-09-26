@@ -16,17 +16,18 @@ class AppColors {
     buttonTextColor = Colors.white;
     colorTextField = Colors.black;
     secondColor = const Color(0xFF616161);
-    tetrialColor = const Color(0xFFE0E0E0);
+    tetrialColor = const Color(0xFF909090);
     bgColor = const Color(0xFFEEEEEE);
   }
 
   // Modo escuro
   void darkModo() {
     corPrimaria = Colors.deepPurple;
+    // corPrimaria = const Color(0xFF6EAA44);
     buttonTextColor = Colors.white;
     colorTextField = Colors.white;
     secondColor = const Color(0xFF707070);
-    tetrialColor = const Color(0xFFB3B3B3);
+    tetrialColor = const Color(0xFF828282);
     bgColor = const Color(0xFF303030);
   }
 }
