@@ -1,18 +1,21 @@
 import 'package:app_tudo_list/app/core/auth/auth_provider.dart';
 import 'package:app_tudo_list/app/services/user/user_service.dart';
+import 'package:app_tudo_list/global/app_color.dart';
 import 'package:app_tudo_list/widgets/customSnackBar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:provider/provider.dart';
 
 class HomeDrawer extends StatelessWidget {
   final nameVN = ValueNotifier<String>('');
+  final AppColors appColors;
 
-  HomeDrawer({super.key});
+  HomeDrawer({super.key, required this.appColors});
 
   @override
   Widget build(BuildContext context) {
+    var textStyle = TextStyle(color: appColors.colorTextField);
     return Drawer(
+      backgroundColor: appColors.bgColor,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(topRight: Radius.circular(30), bottomRight: Radius.circular(30)),
       ),
@@ -20,7 +23,7 @@ class HomeDrawer extends StatelessWidget {
         children: [
           DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.deepPurple.withAlpha(70),
+              color: appColors.corPrimaria,
             ),
             child: Padding(
               padding: const EdgeInsets.all(15),
@@ -68,9 +71,9 @@ class HomeDrawer extends StatelessWidget {
                     builder: (_, value, __) {
                       return Text(
                         value,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 15,
-                          color: Colors.grey[700],
+                          color: Colors.white,
                         ),
                       );
                     },
@@ -85,44 +88,57 @@ class HomeDrawer extends StatelessWidget {
               children: [
                 ListTile(
                   dense: true,
-                  title: const Text('Alterar nome'),
+                  title: Text(
+                    'Alterar nome',
+                    style: textStyle,
+                  ),
                   onTap: () {
                     showDialog(
-                        context: context,
-                        builder: (_) {
-                          return AlertDialog(
-                            title: const Text('Alterar nome'),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.of(context).pop(),
-                                child: const Text(
-                                  'Cancelar',
-                                  style: TextStyle(color: Colors.red),
-                                ),
+                      context: context,
+                      builder: (_) {
+                        return AlertDialog(
+                          title: const Text(
+                            'Alterar nome',
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Text(
+                                'Cancelar',
+                                style: TextStyle(color: Colors.red),
                               ),
-                              TextButton(
-                                  onPressed: () async {
-                                    var nameValue = nameVN.value;
-                                    if (nameValue.isEmpty) {
-                                      CustomSnackBar(color: Colors.red, error: 'Nome obrigatorio').show(context);
-                                    } else {
-                                      await context.read<UserService>().updateDisplayName(nameValue);
-                                      Navigator.of(context).pop();
-                                    }
-                                  },
-                                  child: const Text('Alterar')),
-                            ],
-                            content: TextField(
-                              onChanged: (value) => nameVN.value = value,
                             ),
-                          );
-                        });
+                            TextButton(
+                              onPressed: () async {
+                                var nameValue = nameVN.value;
+                                if (nameValue.isEmpty) {
+                                  CustomSnackBar(color: Colors.red, error: 'Nome obrigatorio').show(context);
+                                } else {
+                                  await context.read<UserService>().updateDisplayName(nameValue);
+                                  Navigator.of(context).pop();
+                                }
+                              },
+                              child: Text(
+                                'Alterar',
+                                style: TextStyle(color: appColors.corPrimaria),
+                              ),
+                            ),
+                          ],
+                          content: TextField(
+                            onChanged: (value) => nameVN.value = value,
+                          ),
+                        );
+                      },
+                    );
                   },
                 ),
                 ListTile(
                   dense: true,
                   onTap: () => context.read<AuthProvider>().logout(),
-                  title: const Text('Sair'),
+                  title: Text(
+                    'Sair',
+                    style: textStyle,
+                  ),
                 ),
               ],
             ),

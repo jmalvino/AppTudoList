@@ -7,19 +7,19 @@ class CustomTextField extends StatefulWidget {
   final bool isObscureText;
   final Color textFieldColor;
   final Color colorPrincipal;
-  final Color colorHint;
+  final Color? colorHint;
   final FocusNode? focusNode;
   final String? Function(String?)? validator;
 
   const CustomTextField(
       {super.key,
-      required this.hintText,
+      this.hintText,
       required this.controller,
       required this.obscureText,
       required this.isObscureText,
       required this.colorPrincipal,
       required this.textFieldColor,
-      required this.colorHint,
+      this.colorHint,
       this.focusNode,
       this.validator});
 

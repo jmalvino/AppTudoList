@@ -1,4 +1,3 @@
-
 import 'package:app_tudo_list/app/core/modules/todo_list_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:nested/nested.dart';
@@ -23,5 +22,16 @@ abstract class TodoListModule {
         ),
       ),
     );
+  }
+
+  Widget getPage(String path, BuildContext context) {
+    final widgetBuilder = _routers[path];
+    if (widgetBuilder != null) {
+      return TodoListPage(
+        page: widgetBuilder,
+        bindings: _bindings,
+      );
+    }
+    throw Exception();
   }
 }

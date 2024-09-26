@@ -4,7 +4,10 @@ import 'package:app_tudo_list/app/modules/auth/auth_module.dart';
 import 'package:app_tudo_list/app/modules/home/home_module.dart';
 import 'package:app_tudo_list/app/modules/splash/splah_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
+
+import 'modules/tasks/task_module.dart';
 
 class AppWidget extends StatefulWidget {
   const AppWidget({super.key});
@@ -35,9 +38,20 @@ class _AppWidgetState extends State<AppWidget> {
       debugShowCheckedModeBanner: false,
       title: 'Lista de Tarefas - TUDO List',
       navigatorKey: TodoListNavigator.navigatorKey,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+         Locale('en', ''),
+        Locale('pt', 'BR'),
+      ],
+      locale: const Locale('pt', 'BR'),
       routes: {
         ...AuthModule().routers,
         ...HomeModule().routers,
+        ...TaskModule().routers,
       },
       home: const SplashPage(),
     );
