@@ -1,5 +1,6 @@
 import 'package:app_tudo_list/app/modules/tasks/task_create_controller.dart';
 import 'package:app_tudo_list/app/modules/tasks/widgets/calendar_button.dart';
+import 'package:app_tudo_list/widgets/customSnackBar.dart';
 import 'package:app_tudo_list/widgets/customTextField.dart';
 import 'package:flutter/material.dart';
 import 'package:validatorless/validatorless.dart';
@@ -37,6 +38,8 @@ class TaskCreatePage extends StatelessWidget {
           var formValid = _formKey.currentState?.validate() ?? false;
           if(formValid){
             _controller.save(_descriptionController.text);
+            _descriptionController.text = '';
+            CustomSnackBar(color: Colors.green[600]!, error: 'Cadastrado com sucesso!').show(context);
           }
         },
         label: const Text('Salvar Task'),

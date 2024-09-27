@@ -1,3 +1,4 @@
+import 'package:app_tudo_list/app/modules/home/home_controller.dart';
 import 'package:app_tudo_list/app/modules/home/widgets/home_drawer.dart';
 import 'package:app_tudo_list/app/modules/home/widgets/home_filter.dart';
 import 'package:app_tudo_list/app/modules/home/widgets/home_header.dart';
@@ -8,7 +9,8 @@ import 'package:app_tudo_list/global/app_color.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final HomeController _homeController;
+  HomePage({super.key, required HomeController homeController}): _homeController = homeController;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -24,6 +26,7 @@ class _HomePageState extends State<HomePage> {
     } else {
       appColors.lightModo();
     }
+    widget._homeController.loadTotalTask();
     super.initState();
   }
 
