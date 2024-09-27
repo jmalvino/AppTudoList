@@ -1,10 +1,14 @@
+import 'package:app_tudo_list/app/models/task_model.dart';
 import 'package:app_tudo_list/global/app_color.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Task extends StatelessWidget {
   final AppColors appColors;
+  final TaskModel model;
+  final dateFormat = DateFormat('dd/MM/y');
 
-  const Task({super.key, required this.appColors});
+  Task({super.key, required this.appColors, required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -28,23 +32,21 @@ class Task extends StatelessWidget {
                   contentPadding: const EdgeInsetsDirectional.all(5),
                   leading: Checkbox(
                     fillColor: MaterialStateProperty.all<Color>(appColors.corPrimaria),
-                    value: true,
+                    value: model.finished,
                     onChanged: (value) {},
                   ),
-                  title: const Text(
-                    'Descrição da TASK',
+                  title: Text(
+                    model.description,
                     style: TextStyle(
-                      decoration: false ? TextDecoration.lineThrough : null,
+                      decoration: model.finished ? TextDecoration.lineThrough : null,
                     ),
                   ),
-                  subtitle: const Text(
-                    '26/09/2024',
+                  subtitle: Text(
+                    dateFormat.format(model.dateTime),
                     style: TextStyle(
-                      decoration: false ? TextDecoration.lineThrough : null,
+                      decoration: model.finished ? TextDecoration.lineThrough : null,
                     ),
                   ),
-
-
                 ),
               ),
             ),

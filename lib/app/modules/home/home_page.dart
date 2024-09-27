@@ -1,3 +1,5 @@
+import 'package:app_tudo_list/app/core/notifier/dafault_listener_notifier.dart';
+import 'package:app_tudo_list/app/models/enuns/task_filter_enum.dart';
 import 'package:app_tudo_list/app/modules/home/home_controller.dart';
 import 'package:app_tudo_list/app/modules/home/widgets/home_drawer.dart';
 import 'package:app_tudo_list/app/modules/home/widgets/home_filter.dart';
@@ -10,7 +12,8 @@ import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
   final HomeController _homeController;
-  HomePage({super.key, required HomeController homeController}): _homeController = homeController;
+
+  HomePage({super.key, required HomeController homeController}) : _homeController = homeController;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -28,11 +31,21 @@ class _HomePageState extends State<HomePage> {
     }
     widget._homeController.loadTotalTask();
     super.initState();
+    DefaultListenerNotifier(changeNotifier: widget._homeController).listener(
+      context: context,
+      successCallback: (notifier, listenerInstace){
+        listenerInstace.dispose();
+      },
+    );
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      widget._homeController.loadTotalTask();
+      widget._homeController.findTask(filter: TaskFilterEnum.today);
+    });
   }
 
-  void _goToCreateTask(BuildContext context) {
+  Future<void> _goToCreateTask(BuildContext context) async{
     // Navigator.of(context).pushNamed('/task/create');
-    Navigator.of(context).push(
+    await Navigator.of(context).push(
       // MaterialPageRoute(
       //   builder: (_) => TaskModule().getPage('/task/create', context),
       // ),
@@ -51,6 +64,7 @@ class _HomePageState extends State<HomePage> {
         },
       ),
     );
+    widget._homeController.refreshPage();
   }
 
   @override

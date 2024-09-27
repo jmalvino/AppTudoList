@@ -11,6 +11,10 @@ class HomeController extends DefaultChangeNotifier {
   TotalTaskModel? todayTotalTasks;
   TotalTaskModel? tomorrowTotalTasks;
   TotalTaskModel? weekTotalTasks;
+  List<TaskModel> allTasks = [];
+  List<TaskModel> filteredTasks = [];
+  DateTime? initialDateOfWeek;
+  DateTime? selectedDay;
 
   HomeController({
     required TaskServices taskServices,
@@ -39,5 +43,52 @@ class HomeController extends DefaultChangeNotifier {
       totalTaskFinish: weekTasks.tasks.where((task) => task.finished).length,
     );
     notifyListeners();
+  }
+
+  Future<void> findTask({required TaskFilterEnum filter}) async {
+    filterSelected = filter;
+    showLoading();
+    notifyListeners();
+    List<TaskModel> tasks;
+
+    switch (filter) {
+      case TaskFilterEnum.today:
+        tasks = await _taskServices.getToday();
+        break;
+      case TaskFilterEnum.tomorrow:
+        tasks = await _taskServices.getTomorrow();
+        break;
+      case TaskFilterEnum.week:
+        final weekModel = await _taskServices.getWeek();
+        initialDateOfWeek = weekModel.staDate;
+        tasks = weekModel.tasks;
+        break;
+    }
+    filteredTasks = tasks;
+    allTasks = tasks;
+
+    if (filter == TaskFilterEnum.week) {
+      if (initialDateOfWeek != null) {
+        filterByDate(initialDateOfWeek!);
+      }
+    }
+
+    hideLoading();
+    notifyListeners();
+  }
+
+  Future<void> refreshPage() async {
+    await findTask(filter: filterSelected);
+    await loadTotalTask();
+    notifyListeners();
+  }
+
+  void filterByDate(DateTime date) {
+    selectedDay = date;
+    filteredTasks = allTasks.where((task){
+      return task.dateTime == date;
+    }).toList();
+    notifyListeners();
+    // filteredTask = allTasks.where((task) => DateUtils.isSameDay(task.dateTime, date)).toList();
   }
 }

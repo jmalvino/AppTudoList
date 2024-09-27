@@ -2,8 +2,10 @@ import 'dart:ffi';
 
 import 'package:app_tudo_list/app/models/enuns/task_filter_enum.dart';
 import 'package:app_tudo_list/app/models/total_task_model.dart';
+import 'package:app_tudo_list/app/modules/home/home_controller.dart';
 import 'package:app_tudo_list/global/app_color.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TodoCardFilter extends StatelessWidget {
   final AppColors appColors;
@@ -38,43 +40,47 @@ class TodoCardFilter extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.all(5),
-        child: Container(
-          height: 100,
-          width: 140,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: Colors.transparent,
-            border: Border.all(color: selected ? Colors.white.withAlpha(80) : appColors.corPrimaria, width: 2),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text('${totalTaskModel?.totalTask ?? 0} TESKS', style: textStyle),
-                Text(
-                  label,
-                  style: TextStyle(
-                    color: selected ? Colors.white :appColors.colorTextField,
-                    fontSize: 20,
+        child: InkWell(
+          onTap: () => context.read<HomeController>().findTask(filter: taskFilter),
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            height: 100,
+            width: 140,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: Colors.transparent,
+              border: Border.all(color: selected ? Colors.white.withAlpha(80) : appColors.corPrimaria, width: 2),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text('${totalTaskModel?.totalTask ?? 0} TESKS', style: textStyle),
+                  Text(
+                    label,
+                    style: TextStyle(
+                      color: selected ? Colors.white : appColors.colorTextField,
+                      fontSize: 20,
+                    ),
                   ),
-                ),
-                TweenAnimationBuilder<double>(
-                  tween: Tween(
-                    end: _getPercentFinish(),
-                    begin: 0.0,
+                  TweenAnimationBuilder<double>(
+                    tween: Tween(
+                      end: _getPercentFinish(),
+                      begin: 0.0,
+                    ),
+                    duration: const Duration(seconds: 1),
+                    builder: (context, value, child) {
+                      return LinearProgressIndicator(
+                        value: value,
+                        backgroundColor: selected ? Colors.white.withAlpha(70) : appColors.tetrialColor,
+                        valueColor: AlwaysStoppedAnimation<Color>(selected ? Colors.white.withAlpha(80) : appColors.corPrimaria),
+                      );
+                    },
                   ),
-                  duration: const Duration(seconds: 1),
-                  builder: (context, value, child) {
-                    return LinearProgressIndicator(
-                      value: value,
-                      backgroundColor: selected ? Colors.white.withAlpha(70) : appColors.tetrialColor,
-                      valueColor: AlwaysStoppedAnimation<Color>(selected ? Colors.white.withAlpha(80) : appColors.corPrimaria),
-                    );
-                  },
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
