@@ -14,8 +14,8 @@ class CalendarButton extends StatelessWidget {
       borderRadius: BorderRadius.circular(15),
       onTap: () async {
         var lastDate = DateTime.now();
-        var firstDate = lastDate.add(
-          const Duration(days: -15 * 365),
+        var firstDate = lastDate.subtract(
+          const Duration(days: 15 * 365),
         );
         lastDate = lastDate.add(
           const Duration(days: 15 * 365),

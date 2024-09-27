@@ -12,7 +12,8 @@ class AppColors {
 
   // Modo claro
   void lightModo() {
-    corPrimaria = Colors.deepPurple;
+    // corPrimaria = Colors.deepPurple;
+    corPrimaria = const Color(0xFF6EAA44);
     buttonTextColor = Colors.white;
     colorTextField = Colors.black;
     secondColor = const Color(0xFF616161);
@@ -22,8 +23,8 @@ class AppColors {
 
   // Modo escuro
   void darkModo() {
-    corPrimaria = Colors.deepPurple;
-    // corPrimaria = const Color(0xFF6EAA44);
+    // corPrimaria = Colors.deepPurple;
+    corPrimaria = const Color(0xFF6EAA44);
     buttonTextColor = Colors.white;
     colorTextField = Colors.white;
     secondColor = const Color(0xFF707070);
