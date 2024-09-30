@@ -69,11 +69,15 @@ class HomeDrawer extends StatelessWidget {
                       return authProvider.user?.displayName ?? 'Nome, não Informado';
                     },
                     builder: (_, value, __) {
-                      return Text(
-                        value,
-                        style: const TextStyle(
-                          fontSize: 15,
-                          color: Colors.white,
+                      return Expanded(
+                        child: Text(
+                          value,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            color: Colors.white,
+                          ),
                         ),
                       );
                     },

@@ -19,7 +19,7 @@ class HomeHeader extends StatelessWidget {
                 'Bem vindo, ',
                 style: textStyle.copyWith(fontWeight: FontWeight.w300),
               ),
-              Text('$value !', style: textStyle),
+              Expanded(child: Text('$value !', style: textStyle, overflow: TextOverflow.ellipsis)),
             ],
           );
         },
