@@ -1,7 +1,9 @@
 import 'package:app_tudo_list/app/models/task_model.dart';
+import 'package:app_tudo_list/app/modules/home/home_controller.dart';
 import 'package:app_tudo_list/global/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class Task extends StatelessWidget {
   final AppColors appColors;
@@ -31,9 +33,15 @@ class Task extends StatelessWidget {
                 child: ListTile(
                   contentPadding: const EdgeInsetsDirectional.all(5),
                   leading: Checkbox(
-                    fillColor: MaterialStateProperty.all<Color>(appColors.corPrimaria),
+                    fillColor: MaterialStateProperty.resolveWith<Color>((states) {
+                      if ( states.contains(MaterialState.selected)){
+                        return appColors.corPrimaria;
+                      }
+                      return Colors.grey;
+                    }),
+                    // fillColor: MaterialStateProperty.all<Color>(appColors.corPrimaria),
                     value: model.finished,
-                    onChanged: (value) {},
+                    onChanged: (value) => context.read<HomeController>().checkOrUncheckTask(model),
                   ),
                   title: Text(
                     model.description,

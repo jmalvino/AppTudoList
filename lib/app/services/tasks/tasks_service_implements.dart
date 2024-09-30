@@ -32,4 +32,7 @@ class TaskServicesImplements implements TaskServices {
     final tasks = await _taskRepository.findByPeriod(startFilter, endFilter);
     return WeekTaskModel(staDate: startFilter, endDate: endFilter, tasks: tasks);
   }
+
+  @override
+  Future<void> checkOrUncheckTask(TaskModel task) => _taskRepository.checkOrUncheckTask(task);
 }

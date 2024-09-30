@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     DefaultListenerNotifier(changeNotifier: widget._homeController).listener(
       context: context,
-      successCallback: (notifier, listenerInstace){
+      successCallback: (notifier, listenerInstace) {
         listenerInstace.dispose();
       },
     );
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Future<void> _goToCreateTask(BuildContext context) async{
+  Future<void> _goToCreateTask(BuildContext context) async {
     // Navigator.of(context).pushNamed('/task/create');
     await Navigator.of(context).push(
       // MaterialPageRoute(
@@ -84,6 +84,9 @@ class _HomePageState extends State<HomePage> {
         actions: [
           PopupMenuButton(
             color: appColors.colorTextField,
+            onSelected: (value) {
+              widget._homeController.showOrHideFinishingTasks();
+            },
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),
@@ -92,8 +95,9 @@ class _HomePageState extends State<HomePage> {
             ),
             itemBuilder: (_) => [
               PopupMenuItem(
+                value: true,
                 child: Text(
-                  'Mostrar tarefas concluidas',
+                  '${widget._homeController.showFinishingTasks ? 'Esconder' : 'Mostrar'} tarefas concluidas',
                   style: TextStyle(
                     color: appColors.bgColor,
                   ),
