@@ -46,7 +46,44 @@ class HomeController extends DefaultChangeNotifier {
     notifyListeners();
   }
 
+
   Future<void> findTask({required TaskFilterEnum filter}) async {
+    filterSelected = filter;
+    showLoading();
+    notifyListeners();
+    List<TaskModel> tasks;
+
+    switch (filter) {
+      case TaskFilterEnum.today:
+        tasks = await _taskServices.getToday();
+        break;
+      case TaskFilterEnum.tomorrow:
+        tasks = await _taskServices.getTomorrow();
+        break;
+      case TaskFilterEnum.week:
+        final weekModel = await _taskServices.getWeek();
+        initialDateOfWeek = weekModel.staDate;
+        tasks = weekModel.tasks;
+        break;
+    }
+    filteredTasks = tasks;
+    allTasks = tasks;
+
+    if (filter == TaskFilterEnum.week) {
+      if (initialDateOfWeek != null) {
+        filterByDate(initialDateOfWeek!);
+      }
+    }
+
+    if(!showFinishingTasks){
+      filteredTasks = filteredTasks.where((task) => !task.finished).toList();
+    }
+
+    hideLoading();
+    notifyListeners();
+  }
+
+  Future<void> findTaskNoCheck({required TaskFilterEnum filter}) async {
     filterSelected = filter;
     showLoading();
     notifyListeners();

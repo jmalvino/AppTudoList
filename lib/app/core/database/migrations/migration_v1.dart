@@ -9,7 +9,16 @@ class MigrationV1 implements Migration {
       id Integer primary key autoincrement, 
       descricao varchar(500) not null, 
       data_hora datatime, 
-      finalizado integer
+      finalizado integer,
+      usuario varchar(150) not null
+    )
+    ''');
+
+    batch.execute('''
+    create table todo_configuracao(
+      id Integer primary key autoincrement,
+      usuario varchar(150) not null,
+      modo integer not null
     )
     ''');
   }
@@ -17,3 +26,4 @@ class MigrationV1 implements Migration {
   @override
   void update(Batch batch) {}
 }
+

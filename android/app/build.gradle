@@ -27,7 +27,8 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.jmalvino.app_tudo_list"
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 34
+//    compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:app_tudo_list/app/models/enuns/task_filter_enum.dart';
 import 'package:app_tudo_list/app/models/total_task_model.dart';
 import 'package:app_tudo_list/app/modules/home/home_controller.dart';
@@ -57,7 +55,7 @@ class TodoCardFilter extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text('${totalTaskModel?.totalTask ?? 0} TESKS', style: textStyle),
+                  Text('${_getTaskNoCheck().toInt()} TESKS', style: textStyle),
                   Text(
                     label,
                     style: TextStyle(
@@ -99,4 +97,17 @@ class TodoCardFilter extends StatelessWidget {
 
     return percent / 100;
   }
+
+  double _getTaskNoCheck() {
+    final total = totalTaskModel?.totalTask ?? 0.0;
+    final totalFinish = totalTaskModel?.totalTaskFinish ?? 0.1;
+
+    if (total == 0) {
+      return 0;
+    }
+    final totalTask = (total - totalFinish) * 1.0;
+
+    return totalTask;
+  }
+
 }

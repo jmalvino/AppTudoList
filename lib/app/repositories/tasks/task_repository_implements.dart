@@ -24,6 +24,7 @@ class TaskRepositoryImplements implements TaskRepository {
     );
   }
 
+
   @override
   Future<List<TaskModel>> findByPeriod(DateTime start, DateTime end) async {
     final starFilter = DateTime(start.year, start.month, start.day, 0, 0, 0);
@@ -52,4 +53,16 @@ class TaskRepositoryImplements implements TaskRepository {
 
     await conn.rawUpdate('UPDATE todo SET finalizado = ? WHERE id = ?', [fineshed , task.id]);
   }
+
+  @override
+  Future<bool> delete(int id) async{
+    try{
+    final conn = await _sqliteConnectionFactory.openConnection();
+    await conn.delete('todo', where:'id = ?', whereArgs: [id]);
+    return true;
+    }catch (e){
+      return false;
+    }
+  }
+
 }
