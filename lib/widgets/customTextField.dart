@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextField extends StatefulWidget {
   final String? hintText;
@@ -10,18 +11,23 @@ class CustomTextField extends StatefulWidget {
   final Color? colorHint;
   final FocusNode? focusNode;
   final String? Function(String?)? validator;
+  final TextInputType? keyboardType; // Parâmetro para keyboardType
+  final List<TextInputFormatter>? inputFormatters;
 
-  const CustomTextField(
-      {super.key,
-      this.hintText,
-      required this.controller,
-      required this.obscureText,
-      required this.isObscureText,
-      required this.colorPrincipal,
-      required this.textFieldColor,
-      this.colorHint,
-      this.focusNode,
-      this.validator});
+  const CustomTextField({
+    super.key,
+    this.hintText,
+    required this.controller,
+    required this.obscureText,
+    required this.isObscureText,
+    required this.colorPrincipal,
+    required this.textFieldColor,
+    this.colorHint,
+    this.focusNode,
+    this.validator,
+    this.keyboardType,
+    this.inputFormatters,
+  });
 
   bool get isTextObscured => obscureText;
 
@@ -50,6 +56,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
             style: TextStyle(
               color: widget.textFieldColor,
             ),
+            keyboardType: widget.keyboardType,
+            inputFormatters: widget.inputFormatters ?? [],
             obscureText: _obscureText,
             controller: widget.controller,
             focusNode: widget.focusNode,

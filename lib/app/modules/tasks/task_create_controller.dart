@@ -13,16 +13,35 @@ class TaskCreateController extends DefaultChangeNotifier {
   }
   DateTime? get selectedDate => _selectDate;
 
-  Future<void> save(String description) async {
+  Future<void> save(String description, String divide) async {
     if (description.isEmpty) {
       throw Exception('O texto da tarefa não pode estar vazio');
     }
     if (_selectDate == null) {
       throw Exception('A data não foi selecionada');
     }
-    await _taskServices.save(_selectDate!, description);
+
+    int repeatCount = int.tryParse(divide) ?? 1;
+    DateTime currentDate = _selectDate!;
+
+    for (int i = 0; i < repeatCount; i++) {
+      await _taskServices.save(currentDate, description);
+      currentDate = DateTime(currentDate.year, currentDate.month + 1, currentDate.day);
+    }
+
     notifyListeners();
   }
+
+// Future<void> save(String description, String divide) async {
+  //   if (description.isEmpty) {
+  //     throw Exception('O texto da tarefa não pode estar vazio');
+  //   }
+  //   if (_selectDate == null) {
+  //     throw Exception('A data não foi selecionada');
+  //   }
+  //   await _taskServices.save(_selectDate!, description);
+  //   notifyListeners();
+  // }
 
   // Future<void> delete(int id) async {
   //   await _taskServices.delete(id);

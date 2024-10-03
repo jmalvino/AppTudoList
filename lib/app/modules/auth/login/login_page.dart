@@ -43,7 +43,6 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
 
-    // Verificar o modo e definir as cores
     if (appColors.isModo == false) {
       appColors.darkModo();
     } else {
@@ -283,23 +282,26 @@ class _LoginPageState extends State<LoginPage> {
               Positioned(
                 top: 7,
                 right: 7,
-                child: IconButton(
-                  icon: Icon(
-                    appColors.isModo ? Icons.sunny : Icons.gps_off,
-                    color: appColors.corPrimaria,
+                child: Visibility(
+                  visible: false,
+                  child: IconButton(
+                    icon: Icon(
+                      appColors.isModo ? Icons.sunny : Icons.gps_off,
+                      color: appColors.corPrimaria,
+                    ),
+                    onPressed: () {
+                      setState(
+                        () {
+                          appColors.isModo = !appColors.isModo;
+                          if (appColors.isModo) {
+                            appColors.lightModo();
+                          } else {
+                            appColors.darkModo();
+                          }
+                        },
+                      );
+                    },
                   ),
-                  onPressed: () {
-                    setState(
-                      () {
-                        appColors.isModo = !appColors.isModo;
-                        if (appColors.isModo) {
-                          appColors.lightModo();
-                        } else {
-                          appColors.darkModo();
-                        }
-                      },
-                    );
-                  },
                 ),
               ),
             ],
