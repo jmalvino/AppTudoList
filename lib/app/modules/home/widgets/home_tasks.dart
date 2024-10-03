@@ -34,16 +34,19 @@ class HomeTasks extends StatelessWidget {
           SizedBox(
             height: 500,
             child: SingleChildScrollView(
-              child: Column(
-                children: context
-                    .select<HomeController, List<TaskModel>>((controller) => controller.filteredTasks)
-                    .map(
-                      (t) => Task(
-                        appColors: appColors,
-                        model: t,
-                      ),
-                    )
-                    .toList(),
+              child: Padding(
+                padding: const EdgeInsets.only(bottom:100),
+                child: Column(
+                  children: context
+                      .select<HomeController, List<TaskModel>>((controller) => controller.filteredTasks)
+                      .map(
+                        (t) => Task(
+                          appColors: appColors,
+                          model: t,
+                        ),
+                      )
+                      .toList(),
+                ),
               ),
             ),
           ),

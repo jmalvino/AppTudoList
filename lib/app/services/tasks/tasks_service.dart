@@ -1,3 +1,4 @@
+import 'package:app_tudo_list/app/models/all_task_model.dart';
 import 'package:app_tudo_list/app/models/task_model.dart';
 import 'package:app_tudo_list/app/models/week_task_model.dart';
 
@@ -7,5 +8,6 @@ abstract class TaskServices{
   Future<List<TaskModel>> getToday();
   Future<List<TaskModel>> getTomorrow();
   Future<WeekTaskModel> getWeek();
+  Future<AllTaskModel> getAll();
   Future<void> checkOrUncheckTask(TaskModel task);
 }

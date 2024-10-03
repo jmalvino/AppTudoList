@@ -1,4 +1,5 @@
 import 'package:app_tudo_list/app/core/notifier/default_change_notifier.dart';
+import 'package:app_tudo_list/app/models/all_task_model.dart';
 import 'package:app_tudo_list/app/models/enuns/task_filter_enum.dart';
 import 'package:app_tudo_list/app/models/task_model.dart';
 import 'package:app_tudo_list/app/models/total_task_model.dart';
@@ -11,9 +12,11 @@ class HomeController extends DefaultChangeNotifier {
   TotalTaskModel? todayTotalTasks;
   TotalTaskModel? tomorrowTotalTasks;
   TotalTaskModel? weekTotalTasks;
+  TotalTaskModel? allTotalTasks;
   List<TaskModel> allTasks = [];
   List<TaskModel> filteredTasks = [];
   DateTime? initialDateOfWeek;
+  DateTime? initialDateOfAll;
   DateTime? selectedDay;
   bool showFinishingTasks = false;
 
@@ -26,10 +29,12 @@ class HomeController extends DefaultChangeNotifier {
       _taskServices.getToday(),
       _taskServices.getTomorrow(),
       _taskServices.getWeek(),
+      _taskServices.getAll(),
     ]);
     final todayTasks = allTask[0] as List<TaskModel>;
     final tomorrowTasks = allTask[1] as List<TaskModel>;
     final weekTasks = allTask[2] as WeekTaskModel;
+    final allTasks = allTask[3] as AllTaskModel;
 
     todayTotalTasks = TotalTaskModel(
       totalTask: todayTasks.length,
@@ -42,6 +47,10 @@ class HomeController extends DefaultChangeNotifier {
     weekTotalTasks = TotalTaskModel(
       totalTask: weekTasks.tasks.length,
       totalTaskFinish: weekTasks.tasks.where((task) => task.finished).length,
+    );
+    allTotalTasks = TotalTaskModel(
+      totalTask: allTasks.tasks.length,
+      totalTaskFinish: allTasks.tasks.where((task) => task.finished).length,
     );
     notifyListeners();
   }
@@ -64,6 +73,11 @@ class HomeController extends DefaultChangeNotifier {
         final weekModel = await _taskServices.getWeek();
         initialDateOfWeek = weekModel.staDate;
         tasks = weekModel.tasks;
+        break;
+      case TaskFilterEnum.all:
+        final allModel = await _taskServices.getAll();
+        initialDateOfAll = allModel.staDate;
+        tasks = allModel.tasks;
         break;
     }
     filteredTasks = tasks;
@@ -101,6 +115,11 @@ class HomeController extends DefaultChangeNotifier {
         initialDateOfWeek = weekModel.staDate;
         tasks = weekModel.tasks;
         break;
+      case TaskFilterEnum.all:
+        final allModel = await _taskServices.getAll();
+        initialDateOfAll = allModel.staDate;
+        tasks = allModel.tasks;
+        break;
     }
     filteredTasks = tasks;
     allTasks = tasks;
@@ -108,6 +127,12 @@ class HomeController extends DefaultChangeNotifier {
     if (filter == TaskFilterEnum.week) {
       if (initialDateOfWeek != null) {
         filterByDate(initialDateOfWeek!);
+      }
+    }
+
+    if (filter == TaskFilterEnum.all) {
+      if (initialDateOfAll != null) {
+        filterByDate(initialDateOfAll!);
       }
     }
 
