@@ -45,6 +45,7 @@ dependencies:
   date_picker_timeline: ^1.2.3
   intl: ^0.18.0
   flutter_slidable: ^3.1.1
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +75,8 @@ flutter:
     - assets/images/icon-google.png
     - assets/images/logo_tudo_list.png
     - assets/images/logo_tudo_list2.png
+    - assets/images/icon_tudo_list.png
+    - assets/images/icon_tudo.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -100,3 +103,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_icons:
+  android: true  # Gera ícones para Android
+  ios: true      # Gera ícones para iOS
+  image_path: "assets/images/icon_tudo.jpg"

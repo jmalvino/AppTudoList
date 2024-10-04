@@ -1,4 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Permissão para acessar a Internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Permissão para gravar dados no armazenamento (se necessário) -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:label="app_tudo_list"
         android:name="${applicationName}"
