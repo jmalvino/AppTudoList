@@ -52,6 +52,13 @@ class HomeFilter extends StatelessWidget {
               ),
               TodoCardFilter(
                 appColors: appColors,
+                label: 'MÊS',
+                taskFilter: TaskFilterEnum.month,
+                totalTaskModel: context.select<HomeController, TotalTaskModel?>((controller) => controller.monthTotalTasks),
+                selected: context.select<HomeController, TaskFilterEnum>((value) => value.filterSelected) == TaskFilterEnum.month,
+              ),
+              TodoCardFilter(
+                appColors: appColors,
                 label: 'TODAS',
                 taskFilter: TaskFilterEnum.all,
                 totalTaskModel: context.select<HomeController, TotalTaskModel?>((controller) => controller.allTotalTasks),

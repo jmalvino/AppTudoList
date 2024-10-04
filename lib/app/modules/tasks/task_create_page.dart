@@ -4,6 +4,7 @@ import 'package:app_tudo_list/widgets/customSnackBar.dart';
 import 'package:app_tudo_list/widgets/customTextField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:validatorless/validatorless.dart';
 
 class TaskCreatePage extends StatefulWidget {
@@ -57,6 +58,8 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
             _descriptionController.text = '';
             CustomSnackBar(color: Colors.green[600]!, error: 'Cadastrado com sucesso!').show(context);
             _dividoEmController.text = '1';
+            _isChecked = false;
+            context.read<TaskCreateController>().selectedDate = null;
           }
         },
         label: const Text('Salvar Task'),
@@ -109,7 +112,7 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
                       });
                     },
                   ),
-                  const Expanded(child: Text('Divisão?', overflow: TextOverflow.ellipsis),),
+                  const Expanded(child: Text('Repete ?', overflow: TextOverflow.ellipsis),),
                 ],
               ),
               const SizedBox(height: 10),

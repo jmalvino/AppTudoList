@@ -1,4 +1,5 @@
 import 'package:app_tudo_list/app/models/all_task_model.dart';
+import 'package:app_tudo_list/app/models/month_task_model.dart';
 import 'package:app_tudo_list/app/models/task_model.dart';
 import 'package:app_tudo_list/app/models/week_task_model.dart';
 import 'package:app_tudo_list/app/repositories/tasks/task_repository.dart';
@@ -41,6 +42,15 @@ class TaskServicesImplements implements TaskServices {
   Future<void> delete(int id) => _taskRepository.delete(id);
 
   // Calcula a data para 5 anos atrás e 5 a frente
+  @override
+  Future<MonthTaskModel> getMonth() async {
+    final today = DateTime.now();
+    var startFilter = DateTime(today.year, today.month, 1);
+    var endFilter = DateTime(today.year, today.month + 1, 0, 23, 59, 59);
+    final tasks = await _taskRepository.findByPeriod(startFilter, endFilter);
+    return MonthTaskModel(staDate: startFilter, endDate: endFilter, tasks: tasks);
+  }
+
   @override
   Future<AllTaskModel> getAll() async {
     final today = DateTime.now();
